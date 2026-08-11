@@ -7,7 +7,7 @@ and betterment suggestions — with full user accounts and analysis history.
 - **Frontend:** Angular 17 (standalone components, RxJS, HttpClient, functional guards/interceptors)
 - **Backend:** FastAPI (async, JWT auth, Pydantic validation)
 - **Database:** PostgreSQL (via SQLAlchemy)
-- **AI:** Google Gemini API (gemini-1.5-flash)
+- **AI:** Google Gemini API (gemini-3.5-flash)
 
 ## Features
 - Register / Log in (JWT-based auth)
