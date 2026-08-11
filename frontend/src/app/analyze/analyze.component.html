@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="card">
+    <h2>Analyze your resume</h2>
+    <form (ngSubmit)="onSubmit()">
+      <label>
+        Resume (PDF)
+        <input type="file" accept=".pdf" (change)="onFileSelected($event)" />
+      </label>
+      <label>
+        Job description
+        <textarea
+          rows="6"
+          [(ngModel)]="jobDescription"
+          name="jobDescription"
+          placeholder="Paste the job description here..."
+        ></textarea>
+      </label>
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Analyzing...' : 'Analyze resume' }}
+      </button>
+    </form>
+    <p class="error" *ngIf="error">{{ error }}</p>
+  </div>
+
+  <div class="card" *ngIf="result">
+
+    <!-- Score section -->
+    <div class="score-header">
+      <div class="score-ring" [ngClass]="scoreClass(result.ats_score)">
+        <svg viewBox="0 0 80 80">
+          <circle class="ring-track" cx="40" cy="40" r="34"></circle>
+          <circle class="ring-fill" cx="40" cy="40" r="34"
+            [style.stroke-dasharray]="213.6"
+            [style.stroke-dashoffset]="213.6 - (213.6 * result.ats_score / 100)"></circle>
+        </svg>
+        <div class="ring-number">{{ result.ats_score }}</div>
+      </div>
+      <div>
+        <p class="eyebrow-sm">ATS Score</p>
+        <h2 style="margin-bottom:4px;">{{ result.ats_score >= 75 ? 'Strong match' : result.ats_score >= 50 ? 'Needs work' : 'Weak match' }}</h2>
+        <p class="muted">How well this resume matches the job description.</p>
+      </div>
+    </div>
+    <!-- /Score section -->
+
+    <!-- Skills section (2-column grid, closes fully before suggestions) -->
+    <div class="skills-grid">
+      <div class="skills-col">
+        <h3>Matched skills</h3>
+        <div>
+          <span class="badge badge-matched" *ngFor="let skill of result.matched_skills">{{ skill }}</span>
+          <span class="muted" *ngIf="!result.matched_skills.length">None detected</span>
+        </div>
+      </div>
+      <div class="skills-col">
+        <h3>Missing skills</h3>
+        <div>
+          <span class="badge badge-missing" *ngFor="let skill of result.missing_skills">{{ skill }}</span>
+          <span class="muted" *ngIf="!result.missing_skills.length">None — nice work!</span>
+        </div>
+      </div>
+    </div>
+    <!-- /Skills section -->
+
+    <!-- Suggestions section (its own full-width block, sibling of skills-grid, not nested inside it) -->
+    <div class="suggestions-section">
+      <h3>Betterment suggestions</h3>
+      <ul class="suggestions-list">
+        <li *ngFor="let s of result.suggestions">{{ s }}</li>
+      </ul>
+    </div>
+    <!-- /Suggestions section -->
+
+  </div>
+</div>

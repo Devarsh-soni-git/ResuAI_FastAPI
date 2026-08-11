@@ -1,0 +1,20 @@
+.eyebrow-sm {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 4px;
+}
+
+.stats-row { display: flex; align-items: center; gap: 32px; }
+.stat-divider { width: 1px; height: 44px; background: var(--line); }
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--indigo);
+  line-height: 1;
+}
+.stat-unit { font-size: 20px; color: var(--indigo); }
+.stat-label { font-size: 13px; color: var(--ink-soft); margin-top: 6px; }

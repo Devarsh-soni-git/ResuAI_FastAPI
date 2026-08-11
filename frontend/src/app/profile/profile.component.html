@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="card" *ngIf="auth.currentUser() as user">
+    <p class="eyebrow-sm">Signed in as</p>
+    <h2 style="margin-bottom:4px;">{{ user.full_name }}</h2>
+    <p class="muted">{{ user.email }}</p>
+  </div>
+
+  <div class="card" *ngIf="stats">
+    <h2>Overview</h2>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-value">{{ stats.total_analyses }}</div>
+        <div class="stat-label">Total resume analyses</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <div class="stat-value">{{ stats.average_score }}<span class="stat-unit">%</span></div>
+        <div class="stat-label">Average ATS score</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Analysis history</h2>
+    <p *ngIf="loading" class="muted">Loading...</p>
+    <table *ngIf="!loading && history.length">
+      <thead>
+        <tr><th>Resume</th><th>ATS score</th><th>Date</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of history">
+          <td>{{ item.resume_filename }}</td>
+          <td><span class="badge" [ngClass]="item.ats_score >= 75 ? 'badge-matched' : 'badge-missing'">{{ item.ats_score }}%</span></td>
+          <td class="mono muted">{{ item.created_at | date:'MMM d, y, h:mm a' }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="!loading && !history.length" class="muted">
+      No analyses yet — head to the Analyze tab to run your first one.
+    </p>
+  </div>
+</div>

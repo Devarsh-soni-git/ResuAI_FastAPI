@@ -1,0 +1,18 @@
+<header class="topbar">
+  <a routerLink="/" class="brand">Resu<span>AI</span></a>
+  <nav>
+    <ng-container *ngIf="auth.currentUser() as user; else guestLinks">
+      <a routerLink="/analyze" routerLinkActive="active">Analyze</a>
+      <a routerLink="/profile" routerLinkActive="active">Profile</a>
+      <span class="hello">Hi, {{ user.full_name.split(' ')[0] }}</span>
+      <button class="secondary" (click)="logout()">Log out</button>
+    </ng-container>
+    <ng-template #guestLinks>
+      <a routerLink="/login" routerLinkActive="active">Log in</a>
+      <a routerLink="/register" routerLinkActive="active" class="cta">Sign up</a>
+    </ng-template>
+  </nav>
+</header>
+<main>
+  <router-outlet></router-outlet>
+</main>
